@@ -278,6 +278,8 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    shooterSubsystem.disable();
+    intakeSubsystem.disable();
     if (config.enableDriveSubsystem) {
       drivetrainSubsystem.setDefaultCommand(
         new DefaultDriveCommand(
@@ -312,7 +314,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    drivetrainSubsystem.stop();
+  }
 
   @Override
   public void simulationPeriodic() {
@@ -384,7 +388,7 @@ public class Robot extends TimedRobot {
         }
       );
 
-      buttons.autoShoot.whenPressed(() -> new AutoShootCommand(this.shooterSubsystem, this.intakeSubsystem, this.rgbSubsystem).schedule());
+      buttons.autoShoot.whenHeld(new AutoShootCommand(this.shooterSubsystem, this.intakeSubsystem, this.rgbSubsystem).withParameters(2, true));
 
       buttons.feedInFire.whenPressed(
         () -> {
