@@ -20,11 +20,11 @@ public class ShooterSubsystem extends BitBucketsSubsystem {
   private CANSparkMax shooterBottom;
   private TalonSRX feeder;
 
-  private final Changeable<Double> topSpeedHigh = BucketLog.changeable(Put.DOUBLE, "shooter/topShooterSpeed", 2200.0);
+  private final Changeable<Double> topSpeedHigh = BucketLog.changeable(Put.DOUBLE, "shooter/topShooterSpeed", 2500.0 * 0.85);
   private final Changeable<Double> bottomSpeedHigh = BucketLog.changeable(
     Put.DOUBLE,
     "shooter/bottomShooterSpeed",
-    4150.0
+    5450.0 * 0.85
   );
   private final Changeable<Double> topSpeedLow = BucketLog.changeable(Put.DOUBLE, "shooter/topShooterSpeedLow", 2000.0);
   private final Changeable<Double> bottomSpeedLow = BucketLog.changeable(
@@ -122,6 +122,7 @@ public class ShooterSubsystem extends BitBucketsSubsystem {
   
   @Override
   public void init() {
+    System.out.println("Test push");
     shooterTop = MotorUtils.makeSpark(config.shooter.shooterTop);
     shooterBottom = MotorUtils.makeSpark(config.shooter.shooterBottom);
     feeder = MotorUtils.makeSRX(config.shooter.feeder);
